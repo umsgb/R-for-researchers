@@ -12,7 +12,7 @@ install.packages('rmarkdown')
 ```
 
 ### Relevant articles
-> [RStudio/Posit R Markdown Cheat Sheet](https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf)
-> [R Markdown: The Definitive Guide by Yihui Xie, J.J. Allaire, and Garrett Grolemund](https://bookdown.org/yihui/rmarkdown/)
-> [R Markdown Cookbook by Yihui Xie, Christophe Dervieux, and Emily Riederer](https://bookdown.org/yihui/rmarkdown-cookbook/)
+> [RStudio/Posit R Markdown Cheat Sheet](https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf) <br>
+> [R Markdown: The Definitive Guide by Yihui Xie, J.J. Allaire, and Garrett Grolemund](https://bookdown.org/yihui/rmarkdown/) <br>
+> [R Markdown Cookbook by Yihui Xie, Christophe Dervieux, and Emily Riederer](https://bookdown.org/yihui/rmarkdown-cookbook/) <br>
 > [R Markdown Template Gallery from RStudio](https://rmarkdown.rstudio.com/gallery.html)
