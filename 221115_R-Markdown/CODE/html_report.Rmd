@@ -1,0 +1,137 @@
+---
+title: "STATISTICAL GENOMICS AND BIOINFORMATICS PLATFORM"
+subtitle: "SAMPLE DATA ANALYSIS REPORT"
+author: "Yong Won Jin"
+date: "`r Sys.Date()`"
+knit: (function(inputFile, encoding){rmarkdown::render(inputFile, encoding=encoding, output_dir="/home/jin/OneDrive/SGB/events/R_for_Researchers/221115_R Markdown/REPORT/")})
+output:
+  html_document:
+    code_folding: 'hide'
+    fig_caption: true
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+    theme: lumen
+always_allow_html: yes
+---
+
+```{css toc-header, eval = TRUE, echo = FALSE}
+.tocify-header {
+  text-indent: initial;
+}
+
+.tocify-subheader > .tocify-item {
+  text-indent: initial;
+  padding-left: 20px;
+}
+
+.tocify-subheader .tocify-subheader > .tocify-item {
+  text-indent: initial;
+  padding-left: 30px;
+}
+
+.tocify-subheader .tocify-subheader .tocify-subheader > .tocify-item {
+  text-indent: initial;
+  padding-left: 40px;
+}
+
+.tocify-subheader .tocify-subheader .tocify-subheader > .tocify-item {
+  text-indent: initial;
+  padding-left: 50px;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  include = TRUE,
+  cache = FALSE,
+  dpi = 150,
+  cache.lazy = FALSE
+  )
+```
+
+```{r load-packages, message=FALSE, warning=FALSE}
+# Data wrangling
+library(tidyverse)
+# Plotting
+library(cowplot)
+library(plotly)
+library(factoextra)
+```
+
+```{r source-functions}
+source('/home/jin/OneDrive/SGB/projects/functions.R')
+```
+
+# Project description
+
+## Study summary
+
+This is where I would write a *summary* about the study/project - i.e. how it came about, who is involved, research question, what types of data were delivered, etc.
+
+## Objectives
+
+-   List research objectives here
+-   You can use asterisk or dash to make a list
+
+# Data preparation
+
+## Load data
+
+For the demo, we'll just use the mtcars dataset.
+
+```{r cars}
+mtcars
+```
+
+# Plots and Figures
+
+Output from plotting functions are included.
+
+```{r barplots}
+mtcars %>%
+  select(mpg, cyl, disp, hp) %>%
+  rownames_to_column(var='Model') %>%
+  pivot_longer(cols=-Model) %>%
+  ggplot(mapping=aes(x=Model,value)) +
+  geom_bar(stat='identity') +
+  facet_grid(name ~ ., scales='free') + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+## 2D and 3D PCA plots {.tabset}
+
+For .html output, you can include 3D interactive plots using `plotly` package.
+
+### 2D PCA
+
+```{r 2D-PCA, warning=FALSE}
+res.pca <- prcomp(mtcars)
+fviz_pca_ind(res.pca,
+             col.ind=as.factor(mtcars$cyl),
+             addEllipses = TRUE,
+             legend.title='cyl',
+             repel=TRUE,
+             title='')
+```
+
+### 3D PCA
+
+```{r 3D-pca, out.width='600px', out.height='400px'}
+plotly_pca(res.pca, as.factor(mtcars$cyl))
+```
+
+# Appendix
+
+## Code
+
+```{r all-code, ref.label=knitr::all_labels(), include=TRUE, echo=TRUE, eval=FALSE}
+
+```
+
+## R session info
+
+```{r session-info, include=TRUE}
+sessionInfo()
+```

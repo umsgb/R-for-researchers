@@ -1,0 +1,157 @@
+---
+title: "STATISTICAL GENOMICS AND BIOINFORMATICS PLATFORM"
+subtitle: "SAMPLE DATA ANALYSIS REPORT"
+author: "Yong Won Jin"
+date: "`r Sys.Date()`"
+knit: (function(inputFile, encoding){rmarkdown::render(inputFile, encoding=encoding, output_dir="/home/jin/OneDrive/SGB/events/R_for_Researchers/221115_R Markdown/REPORT/")})
+output:
+  officedown::rdocx_document:
+    reference_docx: /home/jin/OneDrive/SGB/projects/template.docx
+    page_size:
+      width: 8.5
+      height: 11
+      orient: "portrait"
+    page_margins:
+      top: 0.5
+      bottom: 0.5
+      right: 0.5
+      left: 0.5
+      gutter: 0
+      header: 0.25
+      footer: 0.25
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  include = TRUE,
+  cache = FALSE,
+  dpi = 150,
+  cache.lazy = FALSE
+  )
+```
+
+```{r load-packages, message=FALSE, warning=FALSE, include=FALSE}
+# Markdown
+library(officedown)
+library(officer)
+# Data wrangling
+library(tidyverse)
+# Plotting
+library(cowplot)
+library(plotly)
+library(factoextra)
+```
+
+```{r source-functions, include=FALSE}
+source('/home/jin/OneDrive/SGB/projects/functions.R')
+```
+
+```{r coverpage-par, include=FALSE}
+coverpage_par <- fp_par(
+  text.align = "left", 
+  padding = 0,
+  padding.left = 0.63,
+  padding.right = 0.63,
+)
+```
+
+````verbatim
+
+PROJECT TITLE:
+Sample docx report
+SYNOPSIS: 
+PREPARED FOR:             R for Researchers
+REPORT PREPARED BY:       Yong Won Jin
+                          Statistical Genomics and Bioinformatics Platform
+                          Max Rady College of Medicine
+                          University of Manitoba
+                          E-mail:   yong.jin@umanitoba.ca
+                          Tel:    204-789-3364
+TIME SPENT ON ANALYSIS:   
+````
+\newpage
+
+# Table of content
+
+<!---BLOCK_TOC--->
+
+# List of figures
+
+<!---BLOCK_TOC{seq_id: 'fig'}--->
+
+# List of tables
+
+<!---BLOCK_TOC{seq_id: 'tab'}--->
+
+
+\newpage
+
+# Project description
+
+## Study summary
+
+This is where I would write a *summary* about the study/project - i.e. how it came about, who is involved, research question, what types of data were delivered, etc.
+
+## Objectives
+
+-   List research objectives here
+-   You can use asterisk or dash to make a list
+
+# Data preparation
+
+## Load data
+
+For the demo, we'll just use the mtcars dataset.
+
+```{r cars, tab.cap='First 6 rows of the mtcars dataset'}
+head(mtcars)
+```
+
+# Plots and Figures
+
+Output from plotting functions are included.
+
+```{r barplots, fig.cap='Bar plots of mpg, cyl, disp, and hp'}
+mtcars %>%
+  select(mpg, cyl, disp, hp) %>%
+  rownames_to_column(var='Model') %>%
+  pivot_longer(cols=-Model) %>%
+  ggplot(mapping=aes(x=Model,value)) +
+  geom_bar(stat='identity') +
+  facet_grid(name ~ ., scales='free') + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+## Plots
+
+For .html output, you can include 3D interactive plots using `plotly` package.
+
+### Principal Component Analysis
+
+```{r 2D-PCA, warning=FALSE, fig.cap='PCA plot of car models from mtcars dataset'}
+res.pca <- prcomp(mtcars)
+fviz_pca_ind(res.pca,
+             col.ind=as.factor(mtcars$cyl),
+             addEllipses = TRUE,
+             legend.title='cyl',
+             repel=TRUE,
+             title='')
+```
+
+# Appendix
+
+## Code
+
+```{r all-code}
+#| ref.label=knitr::all_labels(),
+#| include=TRUE,
+#| echo=TRUE,
+#| eval=FALSE
+```
+
+## R session info
+
+```{r session-info, include=TRUE}
+sessionInfo()
+```
